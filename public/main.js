@@ -23,7 +23,7 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
 });
 
-let datapoints = [
+let dataPoints = [
   { label: 'Windows', y: 0 },
   { label: 'MacOs', y: 0 },
   { label: 'Linux', y: 0 },
@@ -46,6 +46,26 @@ if (chartContainer) {
       },
     ],
   });
-  
+
   chart.render();
 }
+
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
+
+var pusher = new Pusher('8dfe384ac89694a6c5d3', {
+  cluster: 'ap2',
+});
+
+var channel = pusher.subscribe('os-poll');
+channel.bind('os-vote', function (data) {
+  dataPoints = dataPoints.map((x) => {
+    if (x.label == data.os) {
+      x.y += data.points;
+      return x;
+    } else {
+      return x;
+    }
+  });
+  chart.render();
+});
