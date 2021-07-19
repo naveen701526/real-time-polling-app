@@ -6,6 +6,9 @@ const app = express();
 
 const poll = require('./routes/poll');
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 // set up your public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -14,6 +17,7 @@ app.use(cors());
 
 app.use('/poll', poll);
 
+app.use(express.json());
 // create a port number
 const PORT = 3000;
 

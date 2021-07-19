@@ -48,7 +48,7 @@ if (chartContainer) {
   });
 
   chart.render();
-}
+
 
 // Enable pusher logging - don't include this in production
 Pusher.logToConsole = true;
@@ -69,3 +69,4 @@ channel.bind('os-vote', function (data) {
   });
   chart.render();
 });
+}
